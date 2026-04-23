@@ -84,7 +84,7 @@ namespace SSMPEssentials.Client.Modules
 
         public static HealthDisplay FindOrCreateHealthBar(GameObject playerContainer, ushort id)
         {
-            var display = playerContainer.GetComponentInChildren<HealthDisplay>();
+            var display = playerContainer.GetComponentInChildren<HealthDisplay>(true);
             if (display == null)
             {
                 Log.LogDebug("Creating display");
@@ -132,6 +132,11 @@ namespace SSMPEssentials.Client.Modules
 
         public static void CreateHealthBar(GameObject healthBar)
         {
+            if (!Client.ServerSettings.HealthbarsEnabled)
+            {
+                healthBar.SetActive(false);
+            }
+            
             healthBar.layer = (int)PhysLayers.UI;
             var spacing = new Vector2(-0.3f, 0.4f);
             var canvasScale = 0.2f;
@@ -200,6 +205,16 @@ namespace SSMPEssentials.Client.Modules
             OnSettingsChange();
         }
 
+        void OnDestroy()
+        {
+            Client.OnServerSettingsUpdate -= OnSettingsChange;
+        }
+
+        void OnEnable()
+        {
+            if (!Client.ServerSettings.HealthbarsEnabled) gameObject.SetActive(false);
+        }
+        
         void OnSettingsChange()
         {
             //if (!gameObject.transform.parent.gameObject.activeInHierarchy) return;
@@ -219,6 +234,8 @@ namespace SSMPEssentials.Client.Modules
 
         public void Refresh()
         {
+            gameObject.SetActive(Client.ServerSettings.HealthbarsEnabled);
+        
             var data = PlayerDataTracker.ClientInstance.GetPlayer(Owner);
             Health = data.Health;
 
