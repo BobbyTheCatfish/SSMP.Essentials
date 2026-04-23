@@ -263,8 +263,6 @@ namespace SSMPEssentials.Client.Modules
                 else if (healthNum <= Health.MaxHealth) renderer.SetSprite(PlayerHealth.MISSING_MASK_ID);
                 else renderer.SetSprite(PlayerHealth.BLUE_MASK_ID);
             }
-
-            gameObject.SetActive(Client.ServerSettings.HealthbarsEnabled);
         }
     }
 }
