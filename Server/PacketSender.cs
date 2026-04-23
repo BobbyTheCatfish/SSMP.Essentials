@@ -2,7 +2,6 @@
 using SSMP.Math;
 using SSMPEssentials.Data;
 using SSMPEssentials.Utils;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SSMPEssentials.Server
 {

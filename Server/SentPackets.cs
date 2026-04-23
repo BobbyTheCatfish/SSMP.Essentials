@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using SSMP.Networking.Packet;
 using SSMP.Networking.Packet.Data;
 using SSMPEssentials.Client.Packets;

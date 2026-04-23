@@ -24,6 +24,7 @@ namespace SSMPEssentials.Utils
 #endif
         }
 
+#if DEBUG
         private static bool ShouldLog(BepInEx.Logging.LogEventArgs log)
         {
             //Debug.Log(log.Data);
@@ -35,6 +36,7 @@ namespace SSMPEssentials.Utils
 
             return false;
         }
+#endif
 
         public static void LogInfo(params object[] data)
         {

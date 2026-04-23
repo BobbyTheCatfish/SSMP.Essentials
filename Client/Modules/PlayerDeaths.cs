@@ -42,7 +42,7 @@ namespace SSMPEssentials.Client.Modules
             PacketSender.SendDeath(LatestCause, LatestPlayerAttack, ranAway);
 
             var currentScene = SceneManager.GetActiveScene().name;
-            var hornet = Common.HornetObject;
+            var hornet = HeroController.SilentInstance ? HeroController.SilentInstance.gameObject : null;
 
             // Check if hornet even exists
             if (hornet == null) return;

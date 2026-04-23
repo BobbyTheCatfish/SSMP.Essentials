@@ -22,7 +22,7 @@ namespace SSMPEssentials.Client.Modules
             GameManager.instance.OnFinishedEnteringScene -= SetHornetPosition;
             Log.LogDebug("Setting hornet position");
 
-            var hornet = Common.HornetObject;
+            var hornet = HeroController.SilentInstance ? HeroController.SilentInstance.gameObject : null;
             if (hornet != null) hornet.transform.SetPosition2D(position);
 
             teleporting = false;
@@ -31,7 +31,7 @@ namespace SSMPEssentials.Client.Modules
         public void WarpToPosition()
         {
             var currentScene = SceneManager.GetActiveScene().name;
-            var hornet = Common.HornetObject;
+            var hornet = HeroController.SilentInstance ? HeroController.SilentInstance.gameObject : null;
 
             // Check if hornet even exists
             if (hornet == null || teleporting)
@@ -102,7 +102,7 @@ namespace SSMPEssentials.Client.Modules
                 return false;
             }
 
-            var hornet = Common.HornetObject;
+            var hornet = HeroController.SilentInstance ? HeroController.SilentInstance.gameObject : null;
             if (hornet == null)
             {
                 Client.LocalChat("I couldn't find your position. Uh oh!");

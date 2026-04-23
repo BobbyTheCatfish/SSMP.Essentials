@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using SSMP.Api.Client;
+﻿using SSMP.Api.Client;
 using SSMP.Api.Server;
 using SSMP.Game;
 using SSMP.Networking.Packet;
@@ -8,8 +7,6 @@ namespace SSMPEssentials.Utils
 {
     internal class Common
     {
-        public static GameObject? HornetObject => HeroController.SilentInstance ? HeroController.SilentInstance.gameObject : null;
-
         public static string ServerTextColor(string text, Colors color)
         {
             var colorStr = color switch
