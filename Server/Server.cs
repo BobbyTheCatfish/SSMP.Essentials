@@ -18,19 +18,25 @@ namespace SSMPEssentials.Server
 
         internal static ServerSettings ServerSettings = new(false);
 
+        public static Modules.Colors? Colors;
+
         public override void Initialize(IServerApi serverApi)
         {
             instance = this;
             api = serverApi;
+            Colors = new();
+
             Log.SetLogger(Logger);
 
             serverApi.ServerManager.PlayerConnectEvent += SendJoinInfo;
+            serverApi.ServerManager.PlayerDisconnectEvent += Colors.OnPlayerLeave;
 
             serverApi.CommandManager.RegisterCommand(new SettingsCommand());
 
             ServerSettings = ServerSettings.ReadFromFile();
             PacketReceiver.Init();
             PacketSender.Init();
+
             Log.LogInfo("SSMP Essentials Server Initialized");
         }
 
@@ -53,6 +59,8 @@ namespace SSMPEssentials.Server
         {
             PacketSender.SendSettingsUpdate(player.Id);
             PacketSender.SendAllPlayerHealth(player.Id);
+
+            Colors?.OnPlayerJoin(player.Id);
         }
     }
 }

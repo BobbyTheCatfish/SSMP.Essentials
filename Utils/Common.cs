@@ -88,4 +88,16 @@ namespace SSMPEssentials.Utils
             Log.LogInfo("THIS SHOULD NOT RUN");
         }
     }
+
+    public struct ColorLite
+    {
+        public byte r;
+        public byte g;
+        public byte b;
+
+        public readonly string ToHtmlString()
+        {
+            return $"#{r:X2}{g:X2}{b:X2}";
+        }
+    }
 }

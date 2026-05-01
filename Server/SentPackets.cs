@@ -24,6 +24,23 @@ namespace SSMPEssentials.Server.Packets
         }
     }
 
+    internal class PlayerColorPacket : ColorPacket
+    {
+        public ushort PlayerId;
+
+        public override void WriteData(IPacket packet)
+        {
+            packet.Write(PlayerId);
+            base.WriteData(packet);
+        }
+
+        public override void ReadData(IPacket packet)
+        {
+            PlayerId = packet.ReadUShort();
+            base.ReadData(packet);
+        }
+    }
+
     internal class SettingsPacket : Packet
     {
         public ServerSettings ServerSettings = null!;
@@ -65,6 +82,7 @@ namespace SSMPEssentials.Server.Packets
                 PacketIDs.Message => new PacketDataCollection<MessagePacket>(),
                 PacketIDs.PlayerHealth => new PacketDataCollection<PlayerHealthPacket>(),
                 PacketIDs.Settings => new SettingsPacket(),
+                PacketIDs.Color => new PacketDataCollection<PlayerColorPacket>(),
                 _ => new ErrorThrowingPacket(packetID, true)
             };
         }

@@ -5,7 +5,6 @@ namespace SSMPEssentials.Client.Commands
 {
     internal class Huddle : IClientCommand
     {
-        public bool AuthorizedOnly => false;
         public string Trigger => "/huddle";
         public string[] Aliases => ["/tpall"];
         public void Execute(string[] arguments)

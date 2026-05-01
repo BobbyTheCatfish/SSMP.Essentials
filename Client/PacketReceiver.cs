@@ -18,6 +18,7 @@ namespace SSMPEssentials.Client
             receiver.RegisterPacketHandler<MessagePacket>(PacketIDs.Message, OnMessage);
             receiver.RegisterPacketHandler<PlayerHealthPacket>(PacketIDs.PlayerHealth, OnHealth);
             receiver.RegisterPacketHandler<SettingsPacket>(PacketIDs.Settings, OnSettings);
+            receiver.RegisterPacketHandler<PlayerColorPacket>(PacketIDs.Color, OnColor);
         }
 
         public static void OnHuddle(TeleportPacket data)
@@ -76,8 +77,24 @@ namespace SSMPEssentials.Client
 
         public static void OnSettings(SettingsPacket data)
         {
+            Log.LogDebug("Settings received");
             Client.ServerSettings = data.ServerSettings;
             Client.OnServerSettingsUpdate.Invoke();
+        }
+
+        public static void OnColor(PlayerColorPacket data)
+        {
+            var player = Client.GetPlayer(data.PlayerId);
+            if (player == null) return;
+
+            Log.LogInfo($"Received color from {data.PlayerId}: {data.Color.ToHtmlString()}");
+
+            if (!ColorUtility.TryParseHtmlString(data.Color.ToHtmlString(), out var color))
+            {
+                return;
+            }
+
+            ColoredNames.SetPlayerColor(player, color);
         }
     }
 }

@@ -8,7 +8,8 @@
         Message,
         PlayerDeath,
         PlayerHealth,
-        Settings
+        Settings,
+        Color
     }
 
     internal enum Messages

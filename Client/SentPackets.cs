@@ -112,6 +112,29 @@ namespace SSMPEssentials.Client.Packets
             Health.LifebloodState = packet.ReadBool();
         }
     }
+
+    internal class ColorPacket : Packet
+    {
+        public ColorLite Color;
+
+        public override void WriteData(IPacket packet)
+        {
+            packet.Write(Color.r);
+            packet.Write(Color.g);
+            packet.Write(Color.b);
+        }
+
+        public override void ReadData(IPacket packet)
+        {
+            Color = new ColorLite
+            {
+                r = packet.ReadByte(),
+                g = packet.ReadByte(),
+                b = packet.ReadByte()
+            };
+        }
+    }
+
     public static class Packets
     {
         internal static IPacketData Instantiate(PacketIDs packetID)
@@ -124,6 +147,7 @@ namespace SSMPEssentials.Client.Packets
                 PacketIDs.Message => new MessagePacket(),
                 PacketIDs.PlayerDeath => new DeathPacket(),
                 PacketIDs.PlayerHealth => new HealthPacket(),
+                PacketIDs.Color => new ColorPacket(),
                 _ => new Server.Packets.Packets.ErrorThrowingPacket(packetID, false)
             };
         }

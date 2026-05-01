@@ -40,11 +40,25 @@ namespace SSMPEssentials.Client
             api.CommandManager.RegisterCommand(new TeleportAccept());
             api.CommandManager.RegisterCommand(new TeleportDeny());
             api.CommandManager.RegisterCommand(new TeleportBack());
+            api.CommandManager.RegisterCommand(new ColorCommand());
+
+            api.ClientManager.ConnectEvent += ColoredNames.OnJoin;
 
             api.ClientManager.DisconnectEvent += () => Spectate.ReturnToSelf();
+            
             api.ClientManager.PlayerEnterSceneEvent += PlayerHealth.OnPlayerEnter;
+            api.ClientManager.PlayerEnterSceneEvent += ColoredNames.ChangeTextColor;
+
+            api.ClientManager.PlayerDisconnectEvent += (p) => ColoredNames.ResetPlayerColor(p, true);
 
             Spectate.Init();
+            ColoredNames.Init();
+
+            HeroController.OnHeroInstanceSet += ColoredNames.HeroSetHook;
+            if (HeroController.SilentInstance)
+            {
+                ColoredNames.HeroSetHook(HeroController.instance);
+            }
 
             Log.LogInfo("SSMP Essentials Client Initialized");
 

@@ -132,5 +132,22 @@ namespace SSMPEssentials.Client
 
             SendData(PacketIDs.PlayerHealth, data);
         }
+
+        internal static void SendColor(UnityEngine.Color32 color)
+        {
+            Log.LogDebug($"Sending color: {color}");
+
+            var data = new ColorPacket
+            {
+                Color =
+                {
+                    r = color.r,
+                    g = color.g,
+                    b = color.b,
+                }
+            };
+
+            SendData(PacketIDs.Color, data);
+        }
     }
 }

@@ -46,6 +46,16 @@ namespace SSMPEssentials.Server.Modules
         [JsonProperty("freecam")]
         [SettingAlias("freecam")]
         public bool FreecamEnabled { get; set; } = true;
+
+        [JsonProperty("colors")]
+        [SettingAlias("colors")]
+        public bool ColoredUsernames { get; set; } = true;
+
+        [JsonProperty("colors_over_teams")]
+        [SettingAlias("coloroverride", "colorbypass")]
+        public bool ColorsOverrideTeams { get; set; } = false;
+
+
         private static string Filepath()
         {
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

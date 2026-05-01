@@ -5,6 +5,7 @@ using SSMPEssentials.Data;
 using SSMPEssentials.Utils;
 using SSMPEssentials.Client.Packets;
 using Cause = SSMPEssentials.Utils.CauseOfDeath;
+using SSMPEssentials.Server.Modules;
 
 namespace SSMPEssentials.Server
 {
@@ -19,6 +20,7 @@ namespace SSMPEssentials.Server
             receiver.RegisterPacketHandler<MessagePacket>(PacketIDs.Message, OnMessage);
             receiver.RegisterPacketHandler<DeathPacket>(PacketIDs.PlayerDeath, OnPlayerDeath);
             receiver.RegisterPacketHandler<HealthPacket>(PacketIDs.PlayerHealth, OnPlayerHealth);
+            receiver.RegisterPacketHandler<ColorPacket>(PacketIDs.Color, OnColor);
         }
 
         public static void OnHuddle(ushort id, TeleportPacket data)
@@ -151,6 +153,14 @@ namespace SSMPEssentials.Server
             health.Health = data.Health;
 
             PacketSender.BroadcastPlayerHealth(id, health.Health);
+        }
+
+        static void OnColor(ushort id, ColorPacket data)
+        {
+            Log.LogDebug($"Received color from {id}: {data.Color.ToHtmlString()}");
+
+            Server.Colors?.SetColor(id, data.Color);
+            PacketSender.BroadcastColor(id, data.Color);
         }
     }
 }

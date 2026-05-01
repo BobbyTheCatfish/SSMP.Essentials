@@ -150,5 +150,40 @@ namespace SSMPEssentials.Server
             }
             sender.SendSingleData(PacketIDs.Settings, data, id);
         }
+
+        internal static void BroadcastColor(ushort id, ColorLite color)
+        {
+            if (sender == null)
+            {
+                Log.LogError("Unable to send packet, packet sender is null.");
+                return;
+            }
+
+            var data = new Packets.PlayerColorPacket
+            {
+                Color = color,
+                PlayerId = id,
+            };
+
+            Broadcast(PacketIDs.Color, data, id, true);
+        }
+
+        internal static void SendColor(ushort playerId, ushort recipientId, ColorLite color)
+        {
+            if (sender == null)
+            {
+                Log.LogError("Unable to send packet, packet sender is null.");
+                return;
+            }
+
+
+            var data = new Packets.PlayerColorPacket
+            {
+                Color = color,
+                PlayerId = playerId,
+            };
+
+            sender.SendCollectionData(PacketIDs.Color, data, recipientId);
+        }
     }
 }
